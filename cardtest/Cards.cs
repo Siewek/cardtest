@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Figgle;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -188,6 +189,13 @@ namespace CardGame.Models
         public int whostarts()
         {
             return rnd.Next(0, 2)+1;
+        }
+
+        public void displaytitle()
+        {
+            Console.WriteLine("//////////////////////////////////////////////////////////////////////////////////////");
+            Console.WriteLine(FiggleFonts.Ogre.Render("Siewek's Card Game"));
+            Console.WriteLine("//////////////////////////////////////////////////////////////////////////////////////");
         }
     
     }

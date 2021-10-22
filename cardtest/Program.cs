@@ -14,9 +14,11 @@ namespace ConsoleApp4
             int whostarts = deck.whostarts();
             bool foldflag = false,endturnflag = false, opfoldflag = false;
             string command;
-           
+            deck.displaytitle();
+
             while(true)//the entire round
             {
+                Console.WriteLine();
                 deck.builddeck();
                 player.clearhand();
                 player2.clearhand();
@@ -27,8 +29,12 @@ namespace ConsoleApp4
                 Console.WriteLine("Starting hands");
                 player.hit();
                 player2.hit();
+                player2.hidefirstcard();
+                Console.ForegroundColor = ConsoleColor.Red;
                 player2.showhand();
+                Console.ForegroundColor = ConsoleColor.Green;
                 player.showhand();
+                Console.ResetColor();
                 while (true)//showdown
                 {
                     if (whostarts == 2)
@@ -62,8 +68,10 @@ namespace ConsoleApp4
                                         {
                                             endturnflag = true;
                                             player.hit();
-                                            Console.WriteLine("You Hit");                                          
+                                            Console.WriteLine("You Hit");
+                                            Console.ForegroundColor = ConsoleColor.Green;
                                             player.showhand();
+                                            Console.ResetColor();
                                             continue;
 
                                         }
@@ -78,9 +86,13 @@ namespace ConsoleApp4
                                     case "showhands":
                                         {
                                             Console.WriteLine("Opponents Hand");
+                                            Console.ForegroundColor = ConsoleColor.Red;
                                             player2.showhand();
+                                            Console.ResetColor();
                                             Console.WriteLine("Your Hand");
+                                            Console.ForegroundColor = ConsoleColor.Green;
                                             player.showhand();
+                                            Console.ResetColor();
                                             continue;
                                         }
                                     case "quit":
@@ -109,24 +121,34 @@ namespace ConsoleApp4
                     Console.WriteLine();
                     whostarts = 2;
                     //win conditions
-                    if ((endturnflag == true && opfoldflag == true && foldflag == true)||player.value >21 || player2.value >21 )
+                    if ((opfoldflag == true && foldflag == true)||player.value >21 || player2.value >21 )
                     {
-                        if (player.value > player2.value && player.value <=21)
+                        player2.showfirstcard();
+                        if (player.value > player2.value && player.value <=21 || player2.value > 21)
                         {
+                            Console.ForegroundColor = ConsoleColor.Red;
                             player2.showhand();
+                            Console.ForegroundColor = ConsoleColor.Green;
                             player.showhand();
+                            Console.ResetColor(); ;
                             Console.WriteLine("You Win");
                         }
                         else if (player.value < player2.value && player2.value <= 21 || player.value >21)
                         {
+                            Console.ForegroundColor = ConsoleColor.Red;
                             player2.showhand();
+                            Console.ForegroundColor = ConsoleColor.Green;
                             player.showhand();
+                            Console.ResetColor();
                             Console.WriteLine("You Lose");
                         }
                         else
                         {
+                            Console.ForegroundColor = ConsoleColor.Red;
                             player2.showhand();
+                            Console.ForegroundColor = ConsoleColor.Green;
                             player.showhand();
+                            Console.ResetColor();
                             Console.WriteLine("It's a tie");
                         }
                         break;

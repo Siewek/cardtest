@@ -8,7 +8,7 @@ namespace cardtest
     class Player : Deck
     {
         protected List<Cards> hand = new List<Cards>();
-
+        private string helper;
         public int myvalue = 0;
         public void hit()
         {
@@ -64,6 +64,22 @@ namespace cardtest
         public void fold()
         {
 
+        }
+
+        public void hidefirstcard()
+        {
+            if (hand.Count() != 0)
+            {
+                helper = hand.ElementAt(0).card;
+                hand.ElementAt(0).card = Convert.ToString('\ufffd');
+            }
+        }
+        public void showfirstcard()
+        {
+            if (hand.Count() != 0 && helper != null)
+            {
+                hand.ElementAt(0).card = helper;
+            }
         }
     }
 }
