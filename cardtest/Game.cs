@@ -37,11 +37,13 @@ namespace cardtest
 
         public void credits()
         {
-            Console.WriteLine();
-            Console.Write("Made by");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(" Michał Olesiewicz");
-            Console.ResetColor();
+            /* Console.WriteLine();
+             Console.Write("Made by");
+             Console.ForegroundColor = ConsoleColor.Red;
+           
+             Console.ResetColor();
+             Console.WriteLine();*/
+            Console.WriteLine("haha no");
             Console.WriteLine();
         }
         public void htp()

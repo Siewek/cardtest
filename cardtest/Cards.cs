@@ -21,7 +21,7 @@ namespace CardGame.Models
         public static Cards[,] deck = new Cards[4, 14];
 
         private char s1 = (char)3, s2 = (char)4, s3 = (char)5, s4 = (char)6;
-
+        protected static int rowhelper, columnhelper;
         private string c1 = "J", c2 = "Q", c3 = "K", c4 = "A";
 
         Random rnd = new Random();
@@ -190,7 +190,14 @@ namespace CardGame.Models
         {
             return rnd.Next(0, 2)+1;
         }
-
+        public void getnextcard()
+        {
+            rowhelper = rnd.Next(0, 4); columnhelper = rnd.Next(0, 13);
+            while (deck[rowhelper, columnhelper] == null)
+            {
+                rowhelper = rnd.Next(0, 4); columnhelper = rnd.Next(0, 13);
+            }
+        }
         public void displaytitle()
         {
             Console.WriteLine("//////////////////////////////////////////////////////////////////////////////////////");

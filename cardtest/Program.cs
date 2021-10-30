@@ -41,12 +41,15 @@ namespace ConsoleApp4
                                 deck.builddeck();
                                 player.clearhand();
                                 player2.clearhand();
+                                player.resetcheat();
                                 foldflag = false;
                                 endturnflag = false;
                                 opfoldflag = false;
                                 //clean start
                                 Console.WriteLine("Starting hands");
+                                deck.getnextcard();                              
                                 player.hit();
+                                deck.getnextcard();
                                 player2.hit();
                                 player2.hidefirstcard();
                                 Console.ForegroundColor = ConsoleColor.Red;
@@ -56,6 +59,10 @@ namespace ConsoleApp4
                                 Console.ResetColor();
                                 while (true)//showdown
                                 {
+                                    if (!foldflag)
+                                    {
+                                        deck.getnextcard();
+                                    }
                                     if (whostarts == 2 && backflag ==false)
                                     {
                                         Console.WriteLine("Opponents Move");
@@ -79,8 +86,10 @@ namespace ConsoleApp4
                                         {
                                             Console.WriteLine("Your Move");
                                             Console.WriteLine();
+                                            deck.getnextcard();
                                             while (!endturnflag)
                                             {
+                                                
                                                 command = Console.ReadLine();
                                                 switch (command)
                                                 {
@@ -129,6 +138,24 @@ namespace ConsoleApp4
                                                             backflag = true;
                                                             endturnflag = true;
                                                             break;
+                                                    }
+                                                    case "peek":
+                                                        {
+                                                            player.lookupophand(player2);
+                                                            if(player.value >21)
+                                                            {
+                                                                endturnflag = true;
+                                                            }
+                                                            break;
+                                                        }
+                                                    case "next":
+                                                        {
+                                                            player.lookupnextcard();
+                                                            if(player.value>21)
+                                                            {
+                                                                endturnflag = true;
+                                                            }
+                                                            break;
                                                         }
                                                     default:
                                                         {
@@ -172,8 +199,8 @@ namespace ConsoleApp4
                                             Console.ResetColor();
                                             Console.WriteLine("It's a tie");
                                         }
-                                        Console.WriteLine("New game starts in 10 seconds");
-                                        Thread.Sleep(10000);
+                                        Console.WriteLine("Press enter to start next turn");
+                                        Console.ReadLine();
                                         Console.Clear();
                                         break;
                                     }
