@@ -4,6 +4,10 @@ using cardtest;
 using System.Threading;
 namespace ConsoleApp4
 {
+    public enum characters
+    {
+        basic = 0, cheater = 1, righteous = 2
+    }
     class Program
     {
         static void Main(string[] args)
@@ -14,6 +18,7 @@ namespace ConsoleApp4
             Game game = new Game();
             int whostarts = deck.whostarts();
             bool foldflag = false, endturnflag = false, opfoldflag = false, backflag=false;
+            characters character;
             string command;
             deck.displaytitle();
 
@@ -33,6 +38,45 @@ namespace ConsoleApp4
                     case "new":
                         {
                             Console.Clear();
+                            while(true)
+                            {
+                                Console.WriteLine("Choose a character");
+                                command = Convert.ToString(Console.ReadLine());
+                                switch(command)
+                                {
+                                    case ("default"):
+                                        {
+                                            Console.WriteLine("You chose the basic character");
+                                            Console.WriteLine();
+                                            character = characters.basic;
+                                            break;
+                                        }
+                                    case ("cheater"):
+                                        {
+                                            Console.WriteLine("You chose the cheater character");
+                                            Console.WriteLine();
+                                            character = characters.cheater;
+                                            break;
+                                        }
+                                    case ("righteous"):
+                                        {
+                                            Console.WriteLine("You chose the righteous character");
+                                            Console.WriteLine();
+                                            character = characters.righteous;
+                                            break;
+                                        }
+                                    default:
+                                        {
+                                            Console.WriteLine("Unknown Character");
+                                            Console.WriteLine();
+                                            continue;
+                                        }                                    
+                                }
+                                Console.WriteLine("Click enter to continue");
+                                Console.ReadLine();                           
+                                Console.Clear();
+                                break;
+                            }
                             while (true)//the entire round
                             {
                                 Console.WriteLine();
@@ -46,7 +90,7 @@ namespace ConsoleApp4
                                 endturnflag = false;
                                 opfoldflag = false;
                                 //clean start
-                                Console.WriteLine("Starting hands");
+                                Console.WriteLine("Starting hands \n");
                                 deck.getnextcard();                              
                                 player.hit();
                                 deck.getnextcard();
@@ -65,16 +109,16 @@ namespace ConsoleApp4
                                     }
                                     if (whostarts == 2 && backflag ==false)
                                     {
-                                        Console.WriteLine("Opponents Move");
-                                        if (player2.value <= 17)
+                                        Console.WriteLine("Opponents Move \n");
+                                        if (player2.value <= (character == characters.righteous?15:17))
                                         {
-                                            Console.WriteLine("Opponent Hit");
+                                            Console.WriteLine("Opponent Hit \n");
                                             player2.hit();
                                             whostarts = 1;
                                         }
                                         else
                                         {
-                                            Console.WriteLine("Opponent folded");
+                                            Console.WriteLine("Opponent folded \n");
                                             opfoldflag = true;
                                             whostarts = 1;
                                         }
@@ -84,7 +128,7 @@ namespace ConsoleApp4
                                         endturnflag = false;                                      
                                         if (foldflag != true)
                                         {
-                                            Console.WriteLine("Your Move");
+                                            Console.WriteLine("Your Move \n");
                                             Console.WriteLine();
                                             deck.getnextcard();
                                             while (!endturnflag)
@@ -97,7 +141,7 @@ namespace ConsoleApp4
                                                         {
                                                             endturnflag = true;
                                                             player.hit();
-                                                            Console.WriteLine("You Hit");
+                                                            Console.WriteLine("You Hit" \n);
                                                             Console.ForegroundColor = ConsoleColor.Green;
                                                             player.showhand();
                                                             Console.ResetColor();
@@ -107,18 +151,18 @@ namespace ConsoleApp4
 
                                                     case "fold":
                                                         {
-                                                            Console.WriteLine("You Folded");
+                                                            Console.WriteLine("You Folded \n");
                                                             foldflag = true;
                                                             endturnflag = true;
                                                             continue;
                                                         }
                                                     case "showhands":
                                                         {
-                                                            Console.WriteLine("Opponents Hand");
+                                                            Console.WriteLine("Opponents Hand \n");
                                                             Console.ForegroundColor = ConsoleColor.Red;
                                                             player2.showhand();
                                                             Console.ResetColor();
-                                                            Console.WriteLine("Your Hand");
+                                                            Console.WriteLine("Your Hand \n");
                                                             Console.ForegroundColor = ConsoleColor.Green;
                                                             player.showhand();
                                                             Console.ResetColor();
@@ -141,7 +185,12 @@ namespace ConsoleApp4
                                                     }
                                                     case "peek":
                                                         {
-                                                            player.lookupophand(player2);
+                                                            if(character == characters.righteous)
+                                                            {
+                                                                Console.WriteLine("Righteous character won't cheat \n");
+                                                                break;
+                                                            }
+                                                            player.lookupophand(player2, character);
                                                             if(player.value >21)
                                                             {
                                                                 endturnflag = true;
@@ -150,7 +199,12 @@ namespace ConsoleApp4
                                                         }
                                                     case "next":
                                                         {
-                                                            player.lookupnextcard();
+                                                            if (character == characters.righteous)
+                                                            {
+                                                                Console.WriteLine("Righteous character won't cheat \n");
+                                                                break;
+                                                            }
+                                                            player.lookupnextcard(character);
                                                             if(player.value>21)
                                                             {
                                                                 endturnflag = true;
@@ -159,7 +213,7 @@ namespace ConsoleApp4
                                                         }
                                                     default:
                                                         {
-                                                            Console.WriteLine("Unknown Command");
+                                                            Console.WriteLine("Unknown Command \n");
                                                             break;
                                                         }
                                                 }
@@ -179,7 +233,7 @@ namespace ConsoleApp4
                                             Console.ForegroundColor = ConsoleColor.Green;
                                             player.showhand();
                                             Console.ResetColor(); ;
-                                            Console.WriteLine("You Win");
+                                            Console.WriteLine("You Win \n");
                                         }
                                         else if (player.value < player2.value && player2.value <= 21 || player.value > 21)
                                         {
@@ -188,7 +242,7 @@ namespace ConsoleApp4
                                             Console.ForegroundColor = ConsoleColor.Green;
                                             player.showhand();
                                             Console.ResetColor();
-                                            Console.WriteLine("You Lose");
+                                            Console.WriteLine("You Lose \n");
                                         }
                                         else
                                         {
@@ -197,9 +251,9 @@ namespace ConsoleApp4
                                             Console.ForegroundColor = ConsoleColor.Green;
                                             player.showhand();
                                             Console.ResetColor();
-                                            Console.WriteLine("It's a tie");
+                                            Console.WriteLine("It's a tie \n");
                                         }
-                                        Console.WriteLine("Press enter to start next turn");
+                                        Console.WriteLine("Press enter to start next turn \n");
                                         Console.ReadLine();
                                         Console.Clear();
                                         break;
@@ -240,6 +294,7 @@ namespace ConsoleApp4
                     default:
                         {
                             Console.WriteLine("Unknown Command " + command);
+                            Console.WriteLine();
                             break;
                         }
                 }

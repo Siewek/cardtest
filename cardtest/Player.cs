@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CardGame.Models;
+using ConsoleApp4;
 namespace cardtest
 {
     class Player : Deck
@@ -10,7 +11,7 @@ namespace cardtest
         private Random rnd = new Random();
         protected List<Cards> hand = new List<Cards>();
         private string helper;
-        private int dc = 10, tries = 0;
+        private int dc = 13, tries = 0;
         public int myvalue = 0;
         public void hit()
         {
@@ -77,11 +78,12 @@ namespace cardtest
             }
         }
 
-        public void lookupophand(Player whatever)
+        public void lookupophand(Player whatever, characters whateveragain)
         {
             int roll;
             roll = rnd.Next(0,20);
-
+            dc = whateveragain == characters.cheater ? 8 : whateveragain == characters.righteous ? 21 : 13; // sets different DCs in one line.
+            tries = whateveragain == characters.cheater && tries == 0 ? 1 : tries;
             if(roll >= dc)
             {
                 Console.WriteLine("Cheating successful, opponents hand revealed");
@@ -107,11 +109,12 @@ namespace cardtest
             }
         }
 
-        public void lookupnextcard()
+        public void lookupnextcard(characters whateveragain)
         {
             int roll;
             roll = rnd.Next(0, 20);
-
+            dc = whateveragain == characters.cheater ? 8 : whateveragain == characters.righteous ? 21 : 13; // sets different DCs in one line.
+            tries = whateveragain == characters.cheater && tries == 0 ? 1 : tries;
             if (roll >= dc)
             {
                 Console.WriteLine($"Cheating successful, your next card is: {deck[rowhelper,columnhelper].card}" );
