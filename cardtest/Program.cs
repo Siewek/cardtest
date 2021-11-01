@@ -21,10 +21,10 @@ namespace ConsoleApp4
             bool foldflag = false, endturnflag = false, opfoldflag = false, backflag=false;
             characters character;
             string command;
-            deck.displaytitle();
 
             while (true)
             {
+                deck.displaytitle();
                 if (backflag == true)
                 {
                     Console.Clear();
@@ -308,12 +308,20 @@ namespace ConsoleApp4
                         }
                     case "help":
                         {
+                            Console.Clear();
                             game.help();
+                            Console.WriteLine("Press enter to go back to main menu \n");
+                            Console.ReadLine();
+                            Console.Clear();
                             break;
                         }
                     case "credits":
                         {
+                            Console.Clear();
                             game.credits();
+                            Console.WriteLine("Press enter to go back to main menu \n");
+                            Console.ReadLine();
+                            Console.Clear();
                             break;
                         }
                     case "quit":
@@ -322,13 +330,20 @@ namespace ConsoleApp4
                         }
                     case "htp":
                         {
+                            Console.Clear();
                             game.htp();
+                            Console.WriteLine("Press enter to go back to main menu \n");
+                            Console.ReadLine();
+                            Console.Clear();
                             break;
                         }
                     default:
                         {
                             Console.WriteLine("Unknown Command " + command);
                             Console.WriteLine();
+                            Console.WriteLine("Press enter to go back to main menu \n");
+                            Console.ReadLine();
+                            Console.Clear();
                             break;
                         }
                 }
