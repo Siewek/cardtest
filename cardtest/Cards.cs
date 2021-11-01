@@ -188,7 +188,7 @@ namespace CardGame.Models
 
         public int whostarts()
         {
-            return rnd.Next(0, 2)+1;
+            return rnd.Next(0, 2);
         }
         public void getnextcard()
         {

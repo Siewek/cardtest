@@ -20,6 +20,20 @@ namespace cardtest
             Console.WriteLine();
         }
 
+        public void characterselect()
+        {
+            Console.WriteLine("Choose your character");
+            Console.WriteLine("Available characters: \n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("righteous - A truthful and honest character, will never cheat, Opponent is slightly less aggressive \n");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("default - has no special benefits, and no handicap, a classic blackjack experience \n");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("cheater - a known cheat, more experience with cheating, but will get disqualified imiediatelly after being cought \n" );
+            Console.ResetColor();
+        }
         public void help()
         {
             Console.WriteLine();
@@ -31,20 +45,28 @@ namespace cardtest
             Console.WriteLine("help - displays help (duh)");
             Console.WriteLine("quit - quits the program");
             Console.WriteLine("back - goes back to main menu (only available in game)");
+            Console.WriteLine("peek - cheat command, reveals your opponents hidden card, can cause the player to lose if unsuccessful");
+            Console.WriteLine("next = cheat command, checks the next drawn card, can cause the player to lose if unsuccessful");
             Console.ResetColor();
+            Console.WriteLine("please note that every command is lowercase, any upper case letters won't be supported \n");
             Console.WriteLine();
         }
 
         public void credits()
         {
-            /* Console.WriteLine();
-             Console.Write("Made by");
+             Console.WriteLine();
+             Console.Write("Made by ");
              Console.ForegroundColor = ConsoleColor.Red;
-           
+             Console.WriteLine("Siewek");
              Console.ResetColor();
-             Console.WriteLine();*/
-            Console.WriteLine("haha no");
-            Console.WriteLine();
+             Console.WriteLine();
+             Console.Write("Special Thanks to: ");
+             Console.ForegroundColor = ConsoleColor.Green;
+             Console.WriteLine("Hyrriss, Borsuq, QCV, Skranbets, Berh, TheYoungBeast, Spockus, Chromo, AJ and Luneł");
+             Console.ResetColor();
+             Console.WriteLine("For being incredibly supportive friends");
+           /* Console.WriteLine("haha no");
+            Console.WriteLine(); */
         }
         public void htp()
         {

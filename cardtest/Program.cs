@@ -2,6 +2,7 @@
 using CardGame.Models;
 using cardtest;
 using System.Threading;
+using Figgle;
 namespace ConsoleApp4
 {
     public enum characters
@@ -16,7 +17,7 @@ namespace ConsoleApp4
             Player player = new Player();
             Player player2 = new Player();
             Game game = new Game();
-            int whostarts = deck.whostarts();
+            int whostarts, whogoes;
             bool foldflag = false, endturnflag = false, opfoldflag = false, backflag=false;
             characters character;
             string command;
@@ -37,10 +38,12 @@ namespace ConsoleApp4
                 {
                     case "new":
                         {
+                            whostarts = deck.whostarts();
+                            whogoes = whostarts;
                             Console.Clear();
                             while(true)
                             {
-                                Console.WriteLine("Choose a character");
+                                game.characterselect();
                                 command = Convert.ToString(Console.ReadLine());
                                 switch(command)
                                 {
@@ -79,6 +82,16 @@ namespace ConsoleApp4
                             }
                             while (true)//the entire round
                             {
+                                if (whogoes == 1)
+                                {
+                                    whostarts = 2;
+                                    whogoes = 2;
+                                }
+                                else
+                                {
+                                    whostarts = 1;
+                                    whogoes = 1;
+                                }
                                 Console.WriteLine();
                                 Console.WriteLine("Dealing hands:");
                                 Console.WriteLine();
@@ -108,19 +121,27 @@ namespace ConsoleApp4
                                         deck.getnextcard();
                                     }
                                     if (whostarts == 2 && backflag ==false)
-                                    {
+                                    {                                     
                                         Console.WriteLine("Opponents Move \n");
                                         if (player2.value <= (character == characters.righteous?15:17))
                                         {
+                                            Console.ForegroundColor = ConsoleColor.Red;
                                             Console.WriteLine("Opponent Hit \n");
                                             player2.hit();
                                             whostarts = 1;
+                                            Console.ResetColor();
                                         }
                                         else
                                         {
+                                            Console.ForegroundColor = ConsoleColor.Red;
                                             Console.WriteLine("Opponent folded \n");
                                             opfoldflag = true;
                                             whostarts = 1;
+                                            Console.ResetColor();
+                                        }
+                                        if (foldflag)
+                                        {
+                                            deck.getnextcard();
                                         }
                                     }
                                     if (whostarts == 1 && player2.value < 22 && backflag == false)
@@ -141,8 +162,8 @@ namespace ConsoleApp4
                                                         {
                                                             endturnflag = true;
                                                             player.hit();
-                                                            Console.WriteLine("You Hit" \n);
                                                             Console.ForegroundColor = ConsoleColor.Green;
+                                                            Console.WriteLine("You Hit \n" );                                                        
                                                             player.showhand();
                                                             Console.ResetColor();
                                                             continue;
@@ -151,7 +172,9 @@ namespace ConsoleApp4
 
                                                     case "fold":
                                                         {
+                                                            Console.ForegroundColor = ConsoleColor.Green;
                                                             Console.WriteLine("You Folded \n");
+                                                            Console.ResetColor();
                                                             foldflag = true;
                                                             endturnflag = true;
                                                             continue;
@@ -233,7 +256,11 @@ namespace ConsoleApp4
                                             Console.ForegroundColor = ConsoleColor.Green;
                                             player.showhand();
                                             Console.ResetColor(); ;
-                                            Console.WriteLine("You Win \n");
+                                            // Console.WriteLine("You Win \n");
+                                            Console.ForegroundColor = ConsoleColor.Green;
+                                            Console.WriteLine(FiggleFonts.Ogre.Render("You Win \n"));
+                                            Console.ResetColor();
+                                           
                                         }
                                         else if (player.value < player2.value && player2.value <= 21 || player.value > 21)
                                         {
@@ -242,7 +269,11 @@ namespace ConsoleApp4
                                             Console.ForegroundColor = ConsoleColor.Green;
                                             player.showhand();
                                             Console.ResetColor();
-                                            Console.WriteLine("You Lose \n");
+                                            // Console.WriteLine("You Lose \n");
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Console.WriteLine(FiggleFonts.Ogre.Render("You Lose \n"));
+                                            Console.ResetColor();
+                                           
                                         }
                                         else
                                         {
@@ -251,8 +282,11 @@ namespace ConsoleApp4
                                             Console.ForegroundColor = ConsoleColor.Green;
                                             player.showhand();
                                             Console.ResetColor();
-                                            Console.WriteLine("It's a tie \n");
-                                        }
+                                            Console.ForegroundColor = ConsoleColor.Gray;
+                                            Console.WriteLine(FiggleFonts.Ogre.Render("It's a tie \n"));
+                                            Console.ResetColor();
+                                            
+                                        }                                       
                                         Console.WriteLine("Press enter to start next turn \n");
                                         Console.ReadLine();
                                         Console.Clear();
